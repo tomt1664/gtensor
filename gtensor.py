@@ -32,7 +32,7 @@
 # written to the file tensr.out for each of the three equivalent lattice directions in graphene. 
 # This gives 9 columns in total, with each row corresponding to the atomic positions. 
 #
-# If an atom is not 3-coordinated, the entry is set to 99.0
+# If an atom is not 3-coordinated, the entry is set to 0.0
 
 import sys
 import math 
@@ -241,7 +241,7 @@ for i in range(nat):
         cmat = np.transpose(amat)
         xvac = np.linalg.solve(cmat,bvec)
 # save the tensor components: exx, eyy, exy
-        tnsr1 = [xvac[0],xvac[3],xvac[1]*xvac[3] + xvac[2]*xvac[0] + xvac[1]*xvac[2]]
+        tnsr1 = [xvac[0]-1,xvac[3]-1,xvac[1]*xvac[3] + xvac[2]*xvac[0] + xvac[1]*xvac[2]]
 
 # rotate 60 degrees
 # rotate lattice
@@ -274,7 +274,7 @@ for i in range(nat):
         cmat = np.transpose(amat)
         xvac = np.linalg.solve(cmat,bvec)
 # save the tensor components: exx, eyy, exy
-        tnsr2 = [xvac[0],xvac[3],xvac[1]*xvac[3] + xvac[2]*xvac[0] + xvac[1]*xvac[2]]
+        tnsr2 = [xvac[0]-1,xvac[3]-1,xvac[1]*xvac[3] + xvac[2]*xvac[0] + xvac[1]*xvac[2]]
 
 # rotate 120 degrees
 # rotate lattice
@@ -307,11 +307,11 @@ for i in range(nat):
         cmat = np.transpose(amat)
         xvac = np.linalg.solve(cmat,bvec)
 # save the tensor components: exx, eyy, exy
-        tnsr3 = [xvac[0],xvac[3],xvac[1]*xvac[3] + xvac[2]*xvac[0] + xvac[1]*xvac[2]]
+        tnsr3 = [xvac[0]-1,xvac[3]-1,xvac[1]*xvac[3] + xvac[2]*xvac[0] + xvac[1]*xvac[2]]
     else:
-        tnsr1 = [99.0,99.0,99.0]
-        tnsr2 = [99.0,99.0,99.0]
-        tnsr3 = [99.0,99.0,99.0]
+        tnsr1 = [0.0,0.0,0.0]
+        tnsr2 = [0.0,0.0,0.0]
+        tnsr3 = [0.0,0.0,0.0]
 
 # write to file
     outline = ' '.join(map(str,tnsr1))+" "+' '.join(map(str,tnsr2))+" "+' '.join(map(str,tnsr3))+"\n"
